@@ -1,0 +1,81 @@
+<mujoco model="wfs">
+  <compiler angle="radian"/>
+  <asset>
+    <texture type="skybox" builtin="gradient" rgb1="0.3 0.5 0.7" rgb2="0 0 0" width="512" height="512" />
+    <texture name="texplane" type="2d" builtin="checker" rgb1=".2 .3 .4" rgb2=".1 0.15 0.2" width="512" height="512" mark="cross" markrgb=".8 .8 .8" />
+    <material name="matplane" reflectance="0.3" texture="texplane" texrepeat="1 1" texuniform="true" />
+    <mesh name="base_link" file="base_link.STL"/>
+    <mesh name="la" file="la.STL"/>
+    <mesh name="ll" file="ll.STL"/>
+    <mesh name="lw" file="lw.STL"/>
+    <mesh name="ra" file="ra.STL"/>
+    <mesh name="rl" file="rl.STL"/>
+    <mesh name="rw" file="rw.STL"/>
+    <texture builtin="gradient" height="15" rgb1="1 1 1" rgb2="0 0 0" type="skybox" width="100"/>
+    <texture builtin="flat" height="80" mark="cross" markrgb="1 1 1" name="texgeom" random="0.1" rgb1="0.8 0.6 0.4" rgb2="0.8 0.6 0.4" type="cube" width="127"/>
+    <texture builtin="checker" height="80" name="texplane2" rgb1="0.2 0.4 0.6" rgb2="0.8 0.8 0.8" type="2d" width="100"/>
+    <material name="MatPlane" reflectance="1.5" shininess="1" specular="1" texrepeat="60 60" texture="texplane"/>
+    <material name="geoms" texture="texgeom" texuniform="true"/>
+    <hfield name="mytilted" file="heightmap.png" nrow="0" ncol="0" size="150 150 0.3 1.5" />    
+  </asset>
+  <worldbody>
+  <light directional="true" diffuse=".4 .4 .4" specular="0.1 0.1 0.1" pos="0 0 5.0" dir="0 0 -1" castshadow="false" />
+    <light directional="true" diffuse=".6 .6 .6" specular="0.2 0.2 0.2" pos="0 0 4" dir="0 0 -1" />
+    <geom name="floor" pos="0 0 0" size="50 50 1" type="plane" material="matplane" margin="0.001" condim="3" friction="1 0.005 0.0001" />
+    <!-- <geom conaffinity="1" condim="3" hfield="mytilted" material="MatPlane" name="floor2" pos="0 0 0" rgba="0.8 0.9 0.8 1" type="hfield" friction="2 0.005 0.0001"/> -->
+     <body name="root" pos="0 0 0.5" quat="0.707 0 0 0">  
+     <joint name="root" type="free"/>
+       <geom type="mesh" rgba="0.949 0.85 0.349 1" mass="2" mesh="base_link"/>
+        <site name="root_site1" pos="0 0 0" quat="0 0 0.707 0"/>
+        <body name="la" pos="-0.014207 0.1052 -0.0465">
+          <inertial pos="-0.033704 -0.010899 -0.020545" quat="0.633304 0.33959 0.323717 0.615477" mass="0.7" diaginertia="0.000520051 0.000462179 6.79406e-05"/>
+          <joint name="laj" type="hinge" limited="true" pos="0 0 0" axis="0 -1 0" range="-0.3 2"/>
+          <geom type="mesh" rgba="0.902 0.902 0.902 1" mesh="la"/>
+          <body name="ll" pos="-0.11545 -0.0075 -0.11166">
+            <inertial pos="0.054145 0.0083245 -0.063627" quat="0.269031 0.608011 0.67566 0.318479" mass="0.28" diaginertia="0.000577889 0.000550901 4.20401e-05"/>
+            <joint name="llj" type="hinge" limited="true" pos="0 0 0" axis="0 1 0" range="-1 0.68" />
+            <geom type="mesh" rgba="0.7137 0.7059 0.7059 1" mesh="ll"/>
+            <body name="lw" pos="0.13092 0.027 -0.12321">
+              <inertial pos="-1.4311e-05 0.027855 -1.1802e-05" quat="0.669586 -0.22712 -0.227073 0.669708" mass="0.8" diaginertia="0.0022205 0.00121924 0.00121886"/>
+              <joint name="lwj" type="hinge" pos="0 0 0" axis="0 -1 0" />
+              <geom type="mesh" rgba="0.5 0.5 0.6 1" mesh="lw"/>
+            </body>
+          </body>
+        </body>
+        <body name="ra" pos="-0.014207 -0.1052 -0.0465">
+          <inertial pos="-0.033704 0.010899 -0.020545" quat="0.615476 0.323721 0.339594 0.633301" mass="0.7" diaginertia="0.000520061 0.000462186 6.79438e-05"/>
+          <joint name="raj" type="hinge" limited="true" pos="0 0 0" axis="0 1 0" range="-2 0.3" />
+          <geom type="mesh" rgba="0.902 0.902 0.902 1" mesh="ra"/>
+          <body name="rl" pos="-0.11545 0.0075 -0.11166">
+            <inertial pos="0.054146 -0.0083247 -0.063628" quat="0.318482 0.675652 0.60802 0.269026" mass="0.28" diaginertia="0.000577909 0.000550911 4.20499e-05"/>
+            <joint name="rlj" type="hinge" limited="true" pos="0 0 0" axis="0 -1 0" range="-0.68 1"/>
+            <geom type="mesh" rgba="0.7137 0.7059 0.7059 1" mesh="rl"/>
+            <body name="rw" pos="0.13092 -0.027 -0.12321">
+              <inertial pos="-1.4311e-05 -0.027855 -1.1802e-05" quat="0.669708 -0.227073 -0.22712 0.669586" mass="0.8" diaginertia="0.0022205 0.00121924 0.00121886"/>
+              <joint name="rwj" type="hinge" pos="0 0 0" axis="0 1 0"/>
+              <geom type="mesh" rgba="0.5 0.5 0.6 1" mesh="rw"/>
+            </body>
+          </body>
+        </body>
+    </body>
+  </worldbody>
+
+  <sensor>
+        <accelerometer name="root_accel" site="root_site1"/>
+        <rangefinder name="radar1" site="root_site1"/>
+        <gyro name="root_gyro" site="root_site1"/>
+      </sensor>
+
+   <actuator>
+    <!-- <motor name="laj" joint="laj" forcelimited="true" forcerange="-12 12" ctrlrange="-12 12"/> -->
+    <motor name="laj" joint="laj" forcelimited="true" forcerange="-12 12" ctrlrange="-12 12"/>
+    <position name="llj" joint="llj" forcelimited="true" forcerange="-12 12" ctrlrange="-12 12"/>
+    <position name="lmotor" joint="lwj" forcelimited="true" forcerange="-2 2" ctrlrange="-2 2"/>
+
+    <!-- <motor name="raj" joint="raj" forcelimited="true" forcerange="-12 12" ctrlrange="-12 12"/> -->
+    <motor name="raj" joint="raj" forcelimited="true" forcerange="-12 12" ctrlrange="-12 12"/>
+    <position name="rlj" joint="rlj" forcelimited="true" forcerange="-12 12" ctrlrange="-12 12"/>
+    <position name="rmotor" joint="rwj" forcelimited="true" forcerange="-2 2" ctrlrange="-2 2"/>
+    </actuator>
+
+</mujoco>

@@ -1,0 +1,55 @@
+<mujoco model="wfs">
+  <compiler angle="radian"/>
+  <asset>
+    <mesh name="base_link" file="/home/robotlab/research/reinforcement_learning/isaacgym/legged_gym_LSTM/legged_gym/resources/robots/wfs/meshes/base_link.STL"/>
+    <mesh name="la" file="/home/robotlab/research/reinforcement_learning/isaacgym/legged_gym_LSTM/legged_gym/resources/robots/wfs/meshes/la.STL"/>
+    <mesh name="ll" file="/home/robotlab/research/reinforcement_learning/isaacgym/legged_gym_LSTM/legged_gym/resources/robots/wfs/meshes/ll.STL"/>
+    <mesh name="lw" file="/home/robotlab/research/reinforcement_learning/isaacgym/legged_gym_LSTM/legged_gym/resources/robots/wfs/meshes/lw.STL"/>
+    <mesh name="ra" file="/home/robotlab/research/reinforcement_learning/isaacgym/legged_gym_LSTM/legged_gym/resources/robots/wfs/meshes/ra.STL"/>
+    <mesh name="rl" file="/home/robotlab/research/reinforcement_learning/isaacgym/legged_gym_LSTM/legged_gym/resources/robots/wfs/meshes/rl.STL"/>
+    <mesh name="rw" file="/home/robotlab/research/reinforcement_learning/isaacgym/legged_gym_LSTM/legged_gym/resources/robots/wfs/meshes/rw.STL"/>
+  </asset>
+  <worldbody>
+    <geom type="mesh" rgba="0.949 0.85 0.349 1" mesh="base_link"/>
+    <body name="la" pos="-0.014207 0.1052 -0.0465">
+      <inertial pos="-0.033704 -0.010899 -0.020545" quat="0.633304 0.33959 0.323717 0.615477" mass="0.7" diaginertia="0.000520051 0.000462179 6.79406e-05"/>
+      <joint name="laj" pos="0 0 0" axis="0 -1 0" range="-2 2" actuatorfrcrange="-12 12"/>
+      <geom type="mesh" rgba="0.902 0.902 0.902 1" mesh="la"/>
+      <body name="ll" pos="-0.11545 -0.0075 -0.11166">
+        <inertial pos="0.054145 0.0083245 -0.063627" quat="0.269031 0.608011 0.67566 0.318479" mass="0.28" diaginertia="0.000577889 0.000550901 4.20401e-05"/>
+        <joint name="llj" pos="0 0 0" axis="0 1 0" range="-1 0.68" actuatorfrcrange="-12 12"/>
+        <geom type="mesh" rgba="0.7137 0.7059 0.7059 1" mesh="ll"/>
+        <body name="lw" pos="0.13092 0.027 -0.12321">
+          <inertial pos="-1.4311e-05 0.027855 -1.1802e-05" quat="0.669586 -0.22712 -0.227073 0.669708" mass="0.832" diaginertia="0.0022205 0.00121924 0.00121886"/>
+          <joint name="lwj" pos="0 0 0" axis="0 -1 0" actuatorfrcrange="-2.5 2.5"/>
+          <geom type="mesh" rgba="0.5 0.5 0.6 1" mesh="lw"/>
+        </body>
+      </body>
+    </body>
+    <body name="ra" pos="-0.014207 -0.1052 -0.0465">
+      <inertial pos="-0.033704 0.010899 -0.020545" quat="0.615476 0.323721 0.339594 0.633301" mass="0.7" diaginertia="0.000520061 0.000462186 6.79438e-05"/>
+      <joint name="raj" pos="0 0 0" axis="0 1 0" range="-2 2" actuatorfrcrange="-12 12"/>
+      <geom type="mesh" rgba="0.902 0.902 0.902 1" mesh="ra"/>
+      <body name="rl" pos="-0.11545 0.0075 -0.11166">
+        <inertial pos="0.054146 -0.0083247 -0.063628" quat="0.318482 0.675652 0.60802 0.269026" mass="0.28" diaginertia="0.000577909 0.000550911 4.20499e-05"/>
+        <joint name="rlj" pos="0 0 0" axis="0 -1 0" range="-0.68 1" actuatorfrcrange="-12 12"/>
+        <geom type="mesh" rgba="0.7137 0.7059 0.7059 1" mesh="rl"/>
+        <body name="rw" pos="0.13092 -0.027 -0.12321">
+          <inertial pos="-1.4311e-05 -0.027855 -1.1802e-05" quat="0.669708 -0.227073 -0.22712 0.669586" mass="0.832" diaginertia="0.0022205 0.00121924 0.00121886"/>
+          <joint name="rwj" pos="0 0 0" axis="0 1 0" actuatorfrcrange="-2.5 2.5"/>
+          <geom type="mesh" rgba="0.5 0.5 0.6 1" mesh="rw"/>
+        </body>
+      </body>
+    </body>
+  </worldbody>
+  <actuator>
+    <motor name="laj" joint="laj" forcelimited="false" forcerange="-120 120"/>
+    <motor name="llj" joint="llj" forcelimited="true" forcerange="-120 120"/>
+    <motor name="lmotor" joint="lwj" forcelimited="true" forcerange="-2 2"/>
+
+    <motor name="raj" joint="raj" forcelimited="true" ctrlrange="-12 12" forcerange="-12 12" />
+    <motor name="rlj" joint="rlj" forcelimited="true" forcerange="-12 12"/>
+    <motor name="rmotor" joint="rwj" forcelimited="true" forcerange="-2 2"/>
+    </actuator>
+
+</mujoco>

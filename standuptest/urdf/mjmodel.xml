@@ -1,0 +1,75 @@
+<mujoco model="standuptest">
+  <compiler angle="radian"/>
+  <asset>
+    <texture type="skybox" builtin="gradient" rgb1="0.3 0.5 0.7" rgb2="0 0 0" width="512" height="512" />
+    <texture name="texplane" type="2d" builtin="checker" rgb1=".2 .3 .4" rgb2=".1 0.15 0.2" width="512" height="512" mark="cross" markrgb=".8 .8 .8" />
+    <material name="matplane" reflectance="0.3" texture="texplane" texrepeat="1 1" texuniform="true" />
+    <mesh name="base_link" file="base_link.STL"/>
+    <mesh name="la_link" file="la_link.STL"/>
+    <mesh name="ll_link" file="ll_link.STL"/>
+    <mesh name="lf_link" file="lf_link.STL"/>
+    <mesh name="ra_link" file="ra_link.STL"/>
+    <mesh name="rl_link" file="rl_link.STL"/>
+    <mesh name="rf_link" file="rf_link.STL"/>
+    <texture builtin="gradient" height="15" rgb1="1 1 1" rgb2="0 0 0" type="skybox" width="100"/>
+    <texture builtin="flat" height="80" mark="cross" markrgb="1 1 1" name="texgeom" random="0.1" rgb1="0.8 0.6 0.4" rgb2="0.8 0.6 0.4" type="cube" width="127"/>
+    <texture builtin="checker" height="80" name="texplane2" rgb1="0.2 0.4 0.6" rgb2="0.8 0.8 0.8" type="2d" width="100"/>
+    <material name="MatPlane" reflectance="1.5" shininess="1" specular="1" texrepeat="60 60" texture="texplane"/>
+    <material name="geoms" texture="texgeom" texuniform="true"/>
+    <hfield name="mytilted" file="heightmap.png" nrow="0" ncol="0" size="150 150 0.3 1.5" />    
+
+  </asset>
+  <worldbody>
+    <light directional="true" diffuse=".4 .4 .4" specular="0.1 0.1 0.1" pos="0 0 5.0" dir="0 0 -1" castshadow="false" />
+    <light directional="true" diffuse=".6 .6 .6" specular="0.2 0.2 0.2" pos="0 0 4" dir="0 0 -1" />
+    <geom name="floor" pos="0 0 0" size="50 50 1" type="plane" material="matplane" margin="0.001" condim="3" friction="1 0.005 0.0001" />
+    
+    <body name="root" pos="0 0 0.5" quat="0.707 0 0 0">  
+     <joint name="root" type="free"/>
+    <geom type="mesh" rgba="1 1 1 1" mesh="base_link"/>
+    <body name="la_link" pos="-0.017369 0.1043 -0.053532">
+      <inertial pos="-0.021846 -0.010918 -0.0068477" quat="0.59042 0.408331 0.394297 0.573759" mass="0.8" diaginertia="0.000589031 0.000501341 0.000107558"/>
+      <joint name="la_joint" pos="0 0 0" axis="0 -1 0" limited="true" range="-2.5 2.5" actuatorfrcrange="-12 12"/>
+      <geom type="mesh" rgba="1 1 1 1" mesh="la_link"/>
+      <body name="ll_link" pos="-0.13732 -0.0075 -0.082121">
+        <inertial pos="0.10136 0.013027 -0.0011852" quat="0.514115 0.433089 0.508449 0.538145" mass="0.3" diaginertia="0.000593278 0.000558991 4.97219e-05"/>
+        <joint name="ll_joint" pos="0 0 0" axis="0 -1 0" limited="true" range="-1.68 0" actuatorfrcrange="-12 12"/>
+        <geom type="mesh" rgba="0.79216 0.81961 0.93333 1" mesh="ll_link"/>
+        <body name="lf_link" pos="0.17941 0.044 0.01173">
+          <inertial pos="0.0086907 0.0082828 -0.0089061" quat="0.495818 0.504291 0.502808 0.497031" mass="0.28026" diaginertia="0.000459531 0.000336517 0.000147612"/>
+          <joint name="lf_joint" pos="0 0 0" axis="0 1 0" limited="true" range="-2.6 0" actuatorfrcrange="-12 12"/>
+          <geom type="mesh" rgba="0.79216 0.81961 0.93333 1" mesh="lf_link"/>
+        </body>
+      </body>
+    </body>
+    <body name="ra_link" pos="-0.017369 -0.1051 -0.053532">
+      <inertial pos="-0.021846 0.010918 -0.0068477" quat="0.573759 0.394296 0.408331 0.59042" mass="0.8" diaginertia="0.000589031 0.000501341 0.000107558"/>
+      <joint name="ra_joint" pos="0 0 0" axis="0 1 0" limited="true" range="-2.5 2.5" actuatorfrcrange="-12 12"/>
+      <geom type="mesh" rgba="0.79216 0.81961 0.93333 1" mesh="ra_link"/>
+      <body name="rl_link" pos="-0.13732 0.0075 -0.082121">
+        <inertial pos="0.10136 -0.013027 -0.0011854" quat="0.53815 0.508444 0.433096 0.514107" mass="0.3" diaginertia="0.000593308 0.000559011 4.97308e-05"/>
+        <joint name="rl_joint" pos="0 0 0" axis="0 1 0" limited="true" range="-0 1.68" actuatorfrcrange="-12 12"/>
+        <geom type="mesh" rgba="1 1 1 1" mesh="rl_link"/>
+        <body name="rf_link" pos="0.17941 -0.044 0.01173">
+          <inertial pos="0.0086908 -0.0082828 -0.008906" quat="0.497031 0.502808 0.504291 0.495818" mass="0.28026" diaginertia="0.000459531 0.000336507 0.000147612"/>
+          <joint name="rf_joint" pos="0 0 0" axis="0 -1 0" limited="true" range="0 2.6" />
+          <geom type="mesh" rgba="0.79216 0.81961 0.93333 1" mesh="rf_link"/>
+          </body>
+        </body>
+      </body>
+    </body>
+  </worldbody>
+
+
+  <actuator>
+    <!-- <motor name="laj" joint="laj" forcelimited="true" forcerange="-12 12" ctrlrange="-12 12"/> -->
+    <motor name="laj" joint="la_joint" forcelimited="true" forcerange="-12 12" ctrlrange="-12 12"/>
+    <motor name="llj" joint="ll_joint" forcelimited="true" forcerange="-12 12" ctrlrange="-12 12"/>
+    <motor name="lmotor" joint="lf_joint" forcelimited="true" forcerange="-12 12" ctrlrange="-12 12"/>
+
+    <!-- <motor name="raj" joint="raj" forcelimited="true" forcerange="-12 12" ctrlrange="-12 12"/> -->
+    <motor name="raj" joint="ra_joint" forcelimited="true" forcerange="-12 12" ctrlrange="-12 12"/>
+    <motor name="rlj" joint="rl_joint" forcelimited="true" forcerange="-12 12" ctrlrange="-12 12"/>
+    <motor name="rmotor" joint="rf_joint" forcelimited="true" forcerange="-12 12" ctrlrange="-12 12"/>
+  </actuator>
+</mujoco>
